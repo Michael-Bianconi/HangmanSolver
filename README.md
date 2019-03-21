@@ -15,7 +15,7 @@ It reads in only words of the correct length, which is the only known
 variable at the start of the game. Then, it determines the most common
 letter. The most common letter is that which appears at least once in
 the highest number of words. Letters are not counted multiple times if
-the occur more than once in the same letter.
+they occur more than once in the same letter.
 
 After each guess, the brain eliminates impossible words. If the guess
 was correct, it eliminates all words without the correct letters in the
