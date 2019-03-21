@@ -42,7 +42,7 @@ char* listGet(List list, unsigned long n, char* buffer)
 
 unsigned char listSet(List list, unsigned long n, char* data)
 {
-	if (!list || n < 0 || n >= list->length) return 0;
+	if (!list || n >= list->length) return 0;
 
 	strncpy(list->data+n*list->datasize, data, list->datasize);
 	return 1;
@@ -67,7 +67,7 @@ void listAdd(List list, char* data)
 char* listRemove(List list, unsigned long n, char* buffer)
 {
 	// Check in bounds
-	if (n > list->length-1 || n < 0) return NULL;
+	if (n > list->length-1) return NULL;
 
 	// If applicable, copy the data into the buffer
 	if (buffer)
@@ -79,7 +79,7 @@ char* listRemove(List list, unsigned long n, char* buffer)
 	char* newdata = malloc((list->length) * list->datasize);
 
 	// For each item in the list
-	for (long i = 0; i < list->length-1; i++)
+	for (long i = 0; i < (long) list->length-1; i++)
 	{
 		// If we've reached the given index, jump over it
 		unsigned long offset = i > (long)(n)-1 ? list->datasize : 0;

@@ -21,7 +21,6 @@
 List buildFromFile(
 	List list, FILE* in, unsigned long length)
 {
-	ssize_t lineLength;
 	unsigned long lineSize = 0;
 	char* lineBuffer = NULL;
 
@@ -30,7 +29,6 @@ List buildFromFile(
 
 	// Add every line from the file where the line length == given length
     while (getline(&lineBuffer, &lineSize, in) != -1) {
-    	char* line = trim(lineBuffer);
     	if (strlen(lineBuffer) == length)
     	{
     		listAdd(list, lineBuffer);
