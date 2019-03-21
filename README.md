@@ -3,7 +3,11 @@
 ## Summary
 This hangman application solves a game of hangman, where the word is
 provided by the user. It reads in a dictionary of words and systematically
-eliminates those that are not possible with the current known elements.
+eliminates those that are not possible with the current known elements. The
+provided dictionary, words.txt contains over 85,000 words. However, it does
+not contain words with fewer than 4 letters, proper nouns, words with
+capital letters, or words with symbols. Dictionaries with these words
+included are permitted, but the brain will most likely never guess them.
 
 ### Usage
 
@@ -15,7 +19,7 @@ It reads in only words of the correct length, which is the only known
 variable at the start of the game. Then, it determines the most common
 letter. The most common letter is that which appears at least once in
 the highest number of words. Letters are not counted multiple times if
-they occur more than once in the same letter.
+they occur more than once in the same word.
 
 After each guess, the brain eliminates impossible words. If the guess
 was correct, it eliminates all words without the correct letters in the
