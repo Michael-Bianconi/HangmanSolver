@@ -161,6 +161,8 @@ static void printHangman(char* phrase, char* missed)
 {
     size_t fails = strlen(missed);
 
+    printf("\nMissed: [%s]\n", missed);
+
                          printf("|-------|  \n");
                          printf("|/      |  \n");
     if (fails > 0)       printf("|       O  \n");
@@ -175,8 +177,7 @@ static void printHangman(char* phrase, char* missed)
                          printf("|          \n");
                          printf("---------  \n");
 
-    printf("Phrase: %s\n", phrase);
-    printf("Missed: %s\n\n", missed);
+    printf("Phrase: %s\n\n", phrase);
 }
 
 int main(int argc, char** argv)
@@ -201,10 +202,11 @@ int main(int argc, char** argv)
     FILE* in = fopen(argv[2], "r");
     List list = listCreate(LIST_LENGTH, strlen(answer)+1);
     buildFromFile(list, in, strlen(answer));
-
     while (1)
     {
         printHangman(phrase, missed);
+
+        printf("%lu possible words\n", list->length);
 
         // The answer was found
         if (gameWon(phrase, answer))

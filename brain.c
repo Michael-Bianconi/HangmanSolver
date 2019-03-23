@@ -29,9 +29,9 @@ List buildFromFile(
 
 	// Add every line from the file where the line length == given length
     while (getline(&lineBuffer, &lineSize, in) != -1) {
-    	if (strlen(lineBuffer) == length)
+    	if (strlen(trim(lineBuffer)) == length)
     	{
-    		listAdd(list, lineBuffer);
+    		listAdd(list, trim(lineBuffer));
     	}
     }
 
