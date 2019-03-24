@@ -200,6 +200,11 @@ int main(int argc, char** argv)
 
     // Open the dictionary and build the list from it
     FILE* in = fopen(argv[2], "r");
+    if (!in)
+    {
+        fprintf(stderr, "Bad dictionary: %s\n", argv[2]);
+        return 1;
+    }
     List list = listCreate(LIST_LENGTH, strlen(answer)+1);
     buildFromFile(list, in, strlen(answer));
     while (1)
@@ -212,21 +217,21 @@ int main(int argc, char** argv)
         if (gameWon(phrase, answer))
         {
             printf("Brain won!\n");
-            return 0;
+            break;
         }
 
         // The guesses limit was reached
         if (gameLost(missed))
         {
             printf("Brain lost!\n");
-            return 0;
+            break;
         }
 
         char letter = mostCommonLetter(attempted, list);
         if (!letter)
         {
             printf("The word doesn't exist in the dictionary!");
-            return 1;
+            break;
         }
 
         printf("Guessing: %c\n", letter);
