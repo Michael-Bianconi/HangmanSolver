@@ -38,6 +38,15 @@ in an ArrayList-like data structure with an underlying array holding the
 data. This array is dynamically resized as need be. It allows for quick
 retrieval of items, but slower insertions and removals.
 
+#### ArrayList (07 April 2019)
+
+Replaced previous List structure with dedicated, fully featured
+[ArrayList](https://github.com/Michael-Bianconi/ArrayList) structure.
+When tested with the answer "shirt" and dict.txt, the number of mallocs and
+frees were reduced from 12,453 to 6,731. The total bytes allocated was
+reduced from 268 megabytes to 783 <i>kilobytes</i>, reducing total
+memory allocation by \~99.7%.
+
 ### Unsolvable Words
 Due to the way the algorithm is set up, there may be words, that exist in
 the given dictionary, that will never be guessed. For example, in the
