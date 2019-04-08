@@ -8,7 +8,7 @@
 #include <string.h> // strlen, strcmp
 #include <unistd.h>
 #include "brain.h"
-#include "list.h"
+#include "arraylist.h"
 
 #define TRUE 1
 #define FALSE 0
@@ -185,7 +185,7 @@ int main(int argc, char** argv)
     // Invalid arguments
     if (argc <= 2 || argc >= 4)
     {
-        fprintf(stderr, "Usage: ./hangman <word> <dictionary>");
+        fprintf(stderr, "Usage: ./hangman <word> <dictionary>\n");
         return 1;
     }
 
@@ -205,13 +205,12 @@ int main(int argc, char** argv)
         fprintf(stderr, "Bad dictionary: %s\n", argv[2]);
         return 1;
     }
-    List list = listCreate(LIST_LENGTH, strlen(answer)+1);
-    buildFromFile(list, in, strlen(answer));
+    ArrayList list = buildFromFile(in, strlen(answer));
     while (1)
     {
         printHangman(phrase, missed);
 
-        printf("%lu possible words\n", list->length);
+        printf("%lu possible words\n", list->size);
 
         // The answer was found
         if (gameWon(phrase, answer))
@@ -230,7 +229,7 @@ int main(int argc, char** argv)
         char letter = mostCommonLetter(attempted, list);
         if (!letter)
         {
-            printf("The word doesn't exist in the dictionary!");
+            printf("The word doesn't exist in the dictionary!\n");
             break;
         }
 
@@ -244,7 +243,7 @@ int main(int argc, char** argv)
     }
 
     // Close resources
-    listDestroy(list);
+    ArrayList_free(list);
     fclose(in);
 
 }

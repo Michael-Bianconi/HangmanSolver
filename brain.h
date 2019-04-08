@@ -1,11 +1,11 @@
 #ifndef BRAIN_H
 #define BRAIN_H
 
-#include "list.h"
+#include "arraylist.h"
 
-List buildFromFile(List, FILE*, unsigned long);
-void eliminate(char*, char*, List);
+ArrayList buildFromFile(FILE*, unsigned long answerLength);
+void eliminate(char*, char*, ArrayList);
 unsigned char isPossible(char*, char*, char*);
-char mostCommonLetter(char*, List);
+char mostCommonLetter(char*, ArrayList);
 
 #endif

@@ -8,6 +8,29 @@
 #include <ctype.h> // isalpha
 #include "trimit.h"
 #include "brain.h"
+#include "arraylist.h"
+
+
+/**
+ * Retrieves the number of lines in the given file.
+ * Dictionaries should have only one word per line.
+ *
+ * @param in File to line count. Must be opened to a valid
+ *           file.
+ * @return Returns the number of lines in the dictionary.
+ */
+static size_t getFileLength(FILE* in)
+{
+	size_t numLines = 0;
+	const char* regex1 = "%*[^\n]";
+	const char* regex2 = "%*c";
+
+	while (EOF != (fscanf(in, regex1), fscanf(in,regex2)))
+	    ++numLines;
+
+	return numLines;
+}
+
 
 /**
  * Populates a queue with every word in the file containing
@@ -18,9 +41,12 @@
  * @param length Length to look for.
  * @return Returns buffer.
  */
-List buildFromFile(
-	List list, FILE* in, unsigned long length)
+ArrayList buildFromFile(FILE* in, unsigned long answerLength)
 {
+
+	size_t fileLength = getFileLength(in);
+	ArrayList list = ArrayList_create(fileLength);
+
 	unsigned long lineSize = 0;
 	char* lineBuffer = NULL;
 
@@ -29,13 +55,14 @@ List buildFromFile(
 
 	// Add every line from the file where the line length == given length
     while (getline(&lineBuffer, &lineSize, in) != -1) {
-    	if (strlen(trim(lineBuffer)) == length)
+    	if (strlen(trim(lineBuffer)) == answerLength)
     	{
-    		listAdd(list, trim(lineBuffer));
+    		ArrayList_add(list, trim(lineBuffer));
     	}
     }
 
     if (lineBuffer) free(lineBuffer);
+    ArrayList_trim(list);
 
     return list;
 }
@@ -44,17 +71,16 @@ List buildFromFile(
  * Create a new Queue from the old one, copying only those queues that
  * are still possibilities for the phrase. Frees the old queue.
  */
-void eliminate(char* phrase, char* missed, List list)
+void eliminate(char* phrase, char* missed, ArrayList list)
 {
-	for (unsigned long i = 0; i < list->length; i++)
+	for (unsigned long i = 0; i < list->size; i++)
 	{
 
-		char data[list->datasize];
-		listGet(list, i, data);
+		char* word = ArrayList_get(list, i);
 
-		if (!isPossible(phrase, missed, data))
+		if (!isPossible(phrase, missed, word))
 		{
-			listRemove(list, i, NULL);
+			ArrayList_remove(list, i);
 			i--;
 		}
 	}
@@ -105,16 +131,15 @@ unsigned char isPossible(char* phrase, char* missed, char* word)
  * @param queue Possible words.
  * @return Returns the most common letter.
  */
-char mostCommonLetter(char* attempts, List list)
+char mostCommonLetter(char* attempts, ArrayList list)
 {
 	unsigned long letters[26] =
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-	for (unsigned long i = 0; i < list->length; i++)
+	for (unsigned long i = 0; i < list->size; i++)
 	{
-		char buffer[list->datasize];
-		listGet(list, i, buffer);
+		char* buffer = ArrayList_get(list, i);
 
 		unsigned long lettersInWord[26] =
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
