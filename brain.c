@@ -22,10 +22,8 @@
 static size_t getFileLength(FILE* in)
 {
 	size_t numLines = 0;
-	const char* regex1 = "%*[^\n]";
-	const char* regex2 = "%*c";
 
-	while (EOF != (fscanf(in, regex1), fscanf(in,regex2)))
+	while (EOF != fscanf(in, "%*[^\n]") && EOF != fscanf(in,"%*c"))
 	    ++numLines;
 
 	return numLines;

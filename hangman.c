@@ -163,19 +163,19 @@ static void printHangman(char* phrase, char* missed)
 
     printf("\nMissed: [%s]\n", missed);
 
-                         printf("|-------|  \n");
-                         printf("|/      |  \n");
-    if (fails > 0)       printf("|       O  \n");
-    else                 printf("|          \n");
-    if (fails >= 4)      printf("|      /|\\\n");
-    else if (fails == 3) printf("|      /|  \n");
-    else if (fails == 2) printf("|       |  \n");
-    else                 printf("|          \n");
-    if (fails == 6)      printf("|      / \\\n");
-    else if (fails == 5) printf("|      /   \n");
-    else                 printf("|          \n");
-                         printf("|          \n");
-                         printf("---------  \n");
+                            printf("|-------|  \n");
+                            printf("|/      |  \n");
+    if (fails > 0)        { printf("|       O  \n"); }
+    else                  { printf("|          \n"); }
+    if (fails >= 4)       { printf("|      /|\\\n"); }
+    else if (fails == 3)  { printf("|      /|  \n"); }
+    else if (fails == 2)  { printf("|       |  \n"); }
+    else                  { printf("|          \n"); }
+    if (fails == 6)       { printf("|      / \\\n"); }
+    else if (fails == 5)  { printf("|      /   \n"); }
+    else                  { printf("|          \n"); }
+                            printf("|          \n");
+                            printf("---------  \n");
 
     printf("Phrase: %s\n\n", phrase);
 }
